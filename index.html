@@ -419,137 +419,78 @@ body.edit-mode .edit-handle-wrap.selected .item-controls { display: flex; }
 
 
 /* ═══════════════════════════════════════
-   SLIDE TRANSITION — overlaid on display:none/flex, no layout impact
+   SLIDE TRANSITIONS
 ═══════════════════════════════════════ */
+@keyframes slideExitLeft  { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-50px)} }
+@keyframes slideExitRight { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(50px)} }
+@keyframes slideEnterRight{ from{opacity:0;transform:translateX(50px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideEnterLeft { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
 
-/* Applied to outgoing slide just before display:none */
-@keyframes slideExitLeft {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(-50px); }
-}
-@keyframes slideExitRight {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(50px); }
-}
-/* Applied to incoming slide right after display:flex */
-@keyframes slideEnterRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes slideEnterLeft {
-  from { opacity: 0; transform: translateX(-50px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-.slide.anim-exit-left  { animation: slideExitLeft  .32s cubic-bezier(.4,0,.2,1) forwards; }
-.slide.anim-exit-right { animation: slideExitRight .32s cubic-bezier(.4,0,.2,1) forwards; }
-.slide.anim-enter-from-right { animation: slideEnterRight .38s cubic-bezier(.4,0,.2,1) forwards; }
-.slide.anim-enter-from-left  { animation: slideEnterLeft  .38s cubic-bezier(.4,0,.2,1) forwards; }
+.slide.anim-exit-left   { animation: slideExitLeft   .3s cubic-bezier(.4,0,.2,1) forwards; }
+.slide.anim-exit-right  { animation: slideExitRight  .3s cubic-bezier(.4,0,.2,1) forwards; }
+.slide.anim-enter-right { animation: slideEnterRight .38s cubic-bezier(.4,0,.2,1) forwards; }
+.slide.anim-enter-left  { animation: slideEnterLeft  .38s cubic-bezier(.4,0,.2,1) forwards; }
 
 /* ═══════════════════════════════════════
-   ELEMENT STAGGER — only when slide has .active
-   Uses animation: none by default, animates on .active
-   IMPORTANT: no positioning changes, only opacity+translateY
+   ELEMENT STAGGER
 ═══════════════════════════════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* TIER 1 — main titles: 80ms */
-.slide.active .s1-title,
-.slide.active .s2-hl,
-.slide.active .s3-hl,
-.slide.active .s4-hl,
-.slide.active .s5i-title,
-.slide.active .s9big,
-.slide.active .ctitle,
-.slide.active .s10hdr-title,
-.slide.active .s11title,
-.slide.active .tptitle,
-.slide.active .s13title
+.slide.active .s1-title,.slide.active .s2-hl,.slide.active .s3-hl,.slide.active .s4-hl,
+.slide.active .s5i-title,.slide.active .s9big,.slide.active .ctitle,.slide.active .s10hdr-title,
+.slide.active .s11title,.slide.active .tptitle,.slide.active .s13title
 { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) .08s both; }
 
-/* TIER 2 — eyebrows, labels, mission: 200ms */
-.slide.active .s1-eyebrow,
-.slide.active .s1-lbl,
-.slide.active .stag,
-.slide.active .s5i-eye,
-.slide.active .s9eye,
-.slide.active .ctag,
-.slide.active .s10hdr-sub,
-.slide.active .s11sub,
-.slide.active .tpaud,
-.slide.active .s13eye,
-.slide.active .mlbl,
-.slide.active .mtxt,
-.slide.active .mission
+.slide.active .s1-eyebrow,.slide.active .s1-lbl,.slide.active .stag,.slide.active .s5i-eye,
+.slide.active .s9eye,.slide.active .ctag,.slide.active .s10hdr-sub,.slide.active .s11sub,
+.slide.active .tpaud,.slide.active .s13eye,.slide.active .mlbl,.slide.active .mtxt,.slide.active .mission
 { animation: fadeUp .48s cubic-bezier(.4,0,.2,1) .2s both; }
 
-/* TIER 3 — body, chips, metadata: 330ms */
-.slide.active .body,
-.slide.active .cbody,
-.slide.active .s9desc,
-.slide.active .s9close,
-.slide.active .chip,
-.slide.active .ktxt,
-.slide.active .s4meta,
-.slide.active .tpbod,
-.slide.active .tpcopy,
-.slide.active .s13sub,
-.slide.active .s1-sub,
-.slide.active .s1-meta,
-.slide.active .s13auth
+.slide.active .body,.slide.active .cbody,.slide.active .s9desc,.slide.active .s9close,
+.slide.active .chip,.slide.active .ktxt,.slide.active .s4meta,.slide.active .tpbod,
+.slide.active .tpcopy,.slide.active .s13sub,.slide.active .s1-sub,.slide.active .s1-meta,.slide.active .s13auth
 { animation: fadeUp .48s cubic-bezier(.4,0,.2,1) .33s both; }
 
-/* TIER 4 — cards with per-child stagger */
-.slide.active .s3card:nth-child(1),
-.slide.active .res-card:nth-child(1),
-.slide.active .tpcard:nth-child(1)
-{ animation: fadeUp .45s ease .18s both; }
-.slide.active .s3card:nth-child(2),
-.slide.active .res-card:nth-child(2),
-.slide.active .tpcard:nth-child(2)
-{ animation: fadeUp .45s ease .30s both; }
-.slide.active .s3card:nth-child(3),
-.slide.active .res-card:nth-child(3),
-.slide.active .tpcard:nth-child(3)
-{ animation: fadeUp .45s ease .42s both; }
-.slide.active .res-card:nth-child(4),
-.slide.active .tpcard:nth-child(4)
-{ animation: fadeUp .45s ease .54s both; }
+.slide.active .s3card:nth-child(1),.slide.active .res-card:nth-child(1),.slide.active .tpcard:nth-child(1){animation:fadeUp .45s ease .18s both}
+.slide.active .s3card:nth-child(2),.slide.active .res-card:nth-child(2),.slide.active .tpcard:nth-child(2){animation:fadeUp .45s ease .30s both}
+.slide.active .s3card:nth-child(3),.slide.active .res-card:nth-child(3),.slide.active .tpcard:nth-child(3){animation:fadeUp .45s ease .42s both}
+.slide.active .res-card:nth-child(4),.slide.active .tpcard:nth-child(4){animation:fadeUp .45s ease .54s both}
 
-/* TIER 5 — media columns */
-.slide.active .mcol:nth-child(1) { animation: fadeUp .4s ease .14s both; }
-.slide.active .mcol:nth-child(2) { animation: fadeUp .4s ease .21s both; }
-.slide.active .mcol:nth-child(3) { animation: fadeUp .4s ease .28s both; }
-.slide.active .mcol:nth-child(4) { animation: fadeUp .4s ease .35s both; }
-.slide.active .mcol:nth-child(5) { animation: fadeUp .4s ease .42s both; }
+.slide.active .mcol:nth-child(1){animation:fadeUp .4s ease .14s both}
+.slide.active .mcol:nth-child(2){animation:fadeUp .4s ease .21s both}
+.slide.active .mcol:nth-child(3){animation:fadeUp .4s ease .28s both}
+.slide.active .mcol:nth-child(4){animation:fadeUp .4s ease .35s both}
+.slide.active .mcol:nth-child(5){animation:fadeUp .4s ease .42s both}
 
-/* Left/right concept panels */
-.slide.active .cleft-content { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) .14s both; }
-.slide.active .cright        { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) .27s both; }
-
-/* Logos and decorative numbers — fade only, no movement */
-.slide.active .lw,
-.slide.active .lb,
-.slide.active .s5i-symbol,
-.slide.active .cnum-bg,
-.slide.active .s13bg,
-.slide.active .s1-yr
-{ animation: fadeIn .55s ease .05s both; }
-
-/* S3 header row */
-.slide.active .s3top { animation: fadeIn .35s ease .04s both; }
+.slide.active .cleft-content{animation:fadeUp .5s cubic-bezier(.4,0,.2,1) .14s both}
+.slide.active .cright       {animation:fadeUp .5s cubic-bezier(.4,0,.2,1) .27s both}
+.slide.active .s3top        {animation:fadeIn .35s ease .04s both}
+.slide.active .lw,.slide.active .lb,.slide.active .s5i-symbol,
+.slide.active .cnum-bg,.slide.active .s13bg,.slide.active .s1-yr
+{animation:fadeIn .55s ease .05s both}
 
 </style>
 </head>
 <body onload="initPresentation()" class="">
+
+<div id="edit-bar">
+  <span class="eb-label">&#9999; Edit Mode</span>
+  <div class="eb-sep"></div>
+  <button class="eb-btn" onclick="ebAddMedia('image')">+ Imagen / PNG</button>
+  <button class="eb-btn" onclick="ebAddMedia('video')">+ Video / GIF</button>
+  <input type="file" id="eb-file-input" accept="image/*,video/mp4,video/webm">
+  <div class="eb-sep"></div>
+  <button class="eb-btn" onclick="ebLayerUp()">&#8593; Capa</button>
+  <button class="eb-btn" onclick="ebLayerDown()">&#8595; Capa</button>
+  <div class="eb-sep"></div>
+  <button class="eb-btn danger" onclick="ebDeleteSelected()">&#10005; Eliminar</button>
+  <div class="eb-sep"></div>
+  <button class="eb-btn primary" onclick="ebExport()">&#8595; Descargar HTML</button>
+  <span id="eb-slide-info">Slide 1 / 15 &mdash; Presiona E para salir</span>
+</div>
+<div id="edit-toast"></div>
+
 
 
 
@@ -857,13 +798,26 @@ let cur = 0;
 const total = slides.length;
 
 function initPresentation(){
+  // Reset all slides
   slides.forEach(sl => {
-    sl.style.display = '';
+    sl.style.display = 'none';
     sl.style.opacity = '';
-    sl.classList.remove('active');
+    sl.classList.remove('active','anim-exit-left','anim-exit-right','anim-enter-right','anim-enter-left');
   });
+  // Show slide 0 directly — no goTo to avoid n===cur early return
   cur = 0;
-  goTo(0);
+  slides[0].style.display = 'flex';
+  slides[0].classList.add('active');
+  if(dotsEl.children.length > 0){
+    document.querySelectorAll('.dot')[0].classList.add('active');
+  }
+  ctr.textContent = '1 / ' + total;
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  if(prev) prev.disabled = true;
+  if(next) next.disabled = total <= 1;
+  const info = document.getElementById('eb-slide-info');
+  if(info) info.textContent = 'Slide 1 / ' + total;
 }
 
 // Clear any pre-existing dots (prevents duplication on exported files)
@@ -876,31 +830,29 @@ slides.forEach((_,i)=>{
 });
 
 function goTo(n, dir){
-  if(n === cur) return;
+  if(n < 0 || n >= total || n === cur) return;
   const direction = (dir !== undefined) ? dir : (n > cur ? 1 : -1);
-  const outgoing  = slides[cur];
+  const prevCur   = cur;
+  const outgoing  = slides[prevCur];
   const incoming  = slides[n];
 
-  // Step 1: animate out the current slide, THEN hide it
-  const exitClass = direction > 0 ? 'anim-exit-left' : 'anim-exit-right';
-  outgoing.classList.add(exitClass);
+  // Animate out
+  outgoing.classList.add(direction > 0 ? 'anim-exit-left' : 'anim-exit-right');
 
   setTimeout(() => {
-    // Hide outgoing after animation
+    // Hide outgoing
     outgoing.style.display = 'none';
-    outgoing.classList.remove('active', exitClass);
-    document.querySelectorAll('.dot')[cur > total-1 ? total-1 : cur].classList.remove('active');
+    outgoing.classList.remove('active','anim-exit-left','anim-exit-right');
+    document.querySelectorAll('.dot')[prevCur].classList.remove('active');
 
-    // Update cur BEFORE showing incoming
+    // Update index
     cur = n;
 
     // Show incoming with enter animation
-    const enterClass = direction > 0 ? 'anim-enter-from-right' : 'anim-enter-from-left';
+    const enterClass = direction > 0 ? 'anim-enter-right' : 'anim-enter-left';
     incoming.classList.add(enterClass);
     incoming.style.display = 'flex';
     incoming.classList.add('active');
-
-    // Remove enter class after animation completes
     setTimeout(() => incoming.classList.remove(enterClass), 420);
 
     // Update UI
@@ -908,11 +860,12 @@ function goTo(n, dir){
     ctr.textContent = (cur+1) + ' / ' + total;
     document.getElementById('prev').disabled = cur === 0;
     document.getElementById('next').disabled = cur === total-1;
-    document.getElementById('eb-slide-info').textContent = `Slide ${cur+1} / ${total}`;
+    const info = document.getElementById('eb-slide-info');
+    if(info) info.textContent = `Slide ${cur+1} / ${total}`;
     if(typeof editMode !== 'undefined' && editMode) activateEditOnSlide(cur);
-  }, 300); // matches exit animation duration
+  }, 290);
 }
-function go(d){ const n=cur+d; if(n>=0&&n<total) goTo(n, d); }
+function go(d){ const n=cur+d; if(n>=0&&n<total) goTo(n); }
 
 /* ═══════════════════════════════════════════════
    EDIT MODE
